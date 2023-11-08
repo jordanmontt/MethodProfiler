@@ -9,8 +9,9 @@ Class {
 		'rootGraphNodes',
 		'graphNodes'
 	],
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-Core',
+	#package : 'MethodProfiler',
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }
@@ -118,14 +119,20 @@ PrfMethodProfilerResult >> callGraph [
 
 { #category : 'ui' }
 PrfMethodProfilerResult >> drawCallGraph [
- 	<inspectorPresentationOrder: 10 title: 'Call Graph'>
-	^ SpRoassal3InspectorPresenter new canvas: self callGraph yourself
+ 	<inspectorPresentationOrder: 2 title: 'Call Graph'>
+	^ SpRoassalInspectorPresenter new canvas: self callGraph yourself
+]
+
+{ #category : 'ui' }
+PrfMethodProfilerResult >> drawCallGraphContext: aContext [
+
+	aContext withoutEvaluator
 ]
 
 { #category : 'ui' }
 PrfMethodProfilerResult >> drawFlameGraph [
-	<inspectorPresentationOrder: 2 title: 'Flame Graph'>
-	^ SpRoassal3InspectorPresenter new canvas: self flameGraph yourself
+	<inspectorPresentationOrder: 1 title: 'Flame Graph'>
+	^ SpRoassalInspectorPresenter new canvas: self flameGraph yourself
 ]
 
 { #category : 'ui' }

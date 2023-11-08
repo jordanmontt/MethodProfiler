@@ -3,8 +3,9 @@ Trait {
 	#instVars : [
 		'method'
 	],
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-Core',
+	#package : 'MethodProfiler',
+	#tag : 'Core'
 }
 
 { #category : 'accessing' }

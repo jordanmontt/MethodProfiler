@@ -3,8 +3,9 @@ Class {
 	#superclass : 'MpRWIHandler',
 	#traits : 'TPrfMethodIntercepter',
 	#classTraits : 'TPrfMethodIntercepter classTrait',
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-runWitnIn',
+	#package : 'MethodProfiler',
+	#tag : 'runWitnIn'
 }
 
 { #category : 'creation' }

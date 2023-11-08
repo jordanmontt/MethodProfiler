@@ -10,8 +10,9 @@ Class {
 	#classVars : [
 		'FinalizationReg'
 	],
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-Core',
+	#package : 'MethodProfiler',
+	#tag : 'Core'
 }
 
 { #category : 'class initialization' }

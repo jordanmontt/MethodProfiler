@@ -3,8 +3,9 @@ Class {
 	#superclass : 'MpHandler',
 	#traits : 'TPrfMethodIntercepter',
 	#classTraits : 'TPrfMethodIntercepter classTrait',
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-MethodProxies',
+	#package : 'MethodProfiler',
+	#tag : 'MethodProxies'
 }
 
 { #category : 'creation' }

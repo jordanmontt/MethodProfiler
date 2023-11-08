@@ -8,8 +8,9 @@ Class {
 		'result',
 		'methodIntercepterClass'
 	],
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-Core',
+	#package : 'MethodProfiler',
+	#tag : 'Core'
 }
 
 { #category : 'instance creation' }

@@ -3,8 +3,9 @@ Class {
 	#superclass : 'PrfNode',
 	#traits : 'TPrfMethodNode',
 	#classTraits : 'TPrfMethodNode classTrait',
-	#category : 'MethodProfiler',
-	#package : 'MethodProfiler'
+	#category : 'MethodProfiler-Core',
+	#package : 'MethodProfiler',
+	#tag : 'Core'
 }
 
 { #category : 'creation' }
