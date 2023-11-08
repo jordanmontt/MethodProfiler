@@ -1,14 +1,15 @@
 Class {
-	#name : #PrfProcessCallStack,
-	#superclass : #ProcessLocalVariable,
+	#name : 'PrfProcessCallStack',
+	#superclass : 'ProcessLocalVariable',
 	#instVars : [
 		'stacks',
 		'runner'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PrfProcessCallStack class >> newWithRunner: aRunner [
 
 	^ self new
@@ -16,7 +17,7 @@ PrfProcessCallStack class >> newWithRunner: aRunner [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfProcessCallStack >> ensureStackIsInitialized [
 	
 	"A new thread requires a stack.
@@ -30,50 +31,50 @@ PrfProcessCallStack >> ensureStackIsInitialized [
 	self value: theStack.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfProcessCallStack >> initialize [
 
 	super initialize.
 	stacks := IdentitySet new
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 PrfProcessCallStack >> pop [
 	"Precondition, the process variable is already initialized"
 	^ self value pop
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 PrfProcessCallStack >> push: anElement [
 	self ensureStackIsInitialized.
 	^self value push: anElement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfProcessCallStack >> results [
 
 	^ runner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfProcessCallStack >> runner [
 
 	^ runner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfProcessCallStack >> runner: aRunner [
 
 	runner := aRunner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfProcessCallStack >> size [
 
 	^ self value size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfProcessCallStack >> top [ 
 	^self value top
 ]

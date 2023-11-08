@@ -1,18 +1,19 @@
 Trait {
-	#name : #TPrfMethodNode,
+	#name : 'TPrfMethodNode',
 	#instVars : [
 		'method'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TPrfMethodNode >> method: anObject [
 
 	method := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 TPrfMethodNode >> printString [
 	^method printString
 ]

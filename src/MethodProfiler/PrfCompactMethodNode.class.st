@@ -1,12 +1,13 @@
 Class {
-	#name : #PrfCompactMethodNode,
-	#superclass : #PrfNode,
+	#name : 'PrfCompactMethodNode',
+	#superclass : 'PrfNode',
 	#traits : 'TPrfMethodNode',
 	#classTraits : 'TPrfMethodNode classTrait',
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #creation }
+{ #category : 'creation' }
 PrfCompactMethodNode class >> forMethod: aMethod withResult: aResultObject compact: aSet [
 
 	| node |

@@ -1,12 +1,13 @@
 Class {
-	#name : #PrfTreeMethodNode,
-	#superclass : #PrfLiveNode,
+	#name : 'PrfTreeMethodNode',
+	#superclass : 'PrfLiveNode',
 	#traits : 'TPrfMethodNode',
 	#classTraits : 'TPrfMethodNode classTrait',
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #creation }
+{ #category : 'creation' }
 PrfTreeMethodNode class >> forMethod: aMethod withResult: aResultObject withHash: aString [
 
 	| node |

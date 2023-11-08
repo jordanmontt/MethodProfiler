@@ -1,23 +1,25 @@
 Class {
-	#name : #PrfMethodProfiler,
-	#superclass : #Object,
+	#name : 'PrfMethodProfiler',
+	#superclass : 'Object',
 	#instVars : [
 		'methods',
 		'runners',
-		'lastRunner'
+		'lastRunner',
+		'useRunWithIn'
 	],
 	#classVars : [
 		'FinalizationReg'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PrfMethodProfiler class >> initialize [ 
 	FinalizationReg := FinalizationRegistry new. 
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler class >> shouldWrap: aMethod [
 
 	| unproxifiedMethod |
@@ -33,13 +35,13 @@ PrfMethodProfiler class >> shouldWrap: aMethod [
 	^ true
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> addClass: aClass [
 	aClass methodDictionary do: [ :method | self addMethod: method unproxifiedMethod ].
 	^self
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> addMethod: aMethod [
 
 	| unproxifiedMethod |
@@ -49,7 +51,7 @@ PrfMethodProfiler >> addMethod: aMethod [
 	^ self
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> addPackage: aPackage [
 	|classes|
 	classes := aPackage definedClasses.
@@ -57,7 +59,7 @@ PrfMethodProfiler >> addPackage: aPackage [
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PrfMethodProfiler >> createRunner [
 
 	lastRunner ifNotNil: [
@@ -65,12 +67,20 @@ PrfMethodProfiler >> createRunner [
 			^ Error signal: 'The last profiling is still running' ].
 		lastRunner destroy ].
 
-	lastRunner := PrfMethodProfilerRunner newForMethods: methods.
+	lastRunner := useRunWithIn
+		ifTrue: [ PrfMethodProfilerRunner newRWIForMethods: methods ]
+		ifFalse: [ PrfMethodProfilerRunner newForMethods: methods ].
 	runners add: lastRunner.
 	^ lastRunner
 ]
 
-{ #category : #installation }
+{ #category : 'initialization' }
+PrfMethodProfiler >> doNotUseRunWithIn [
+
+	useRunWithIn := false
+]
+
+{ #category : 'installation' }
 PrfMethodProfiler >> excludeClass: aClass [
 	|methods|
 	methods := aClass methodDictionary.
@@ -79,7 +89,7 @@ PrfMethodProfiler >> excludeClass: aClass [
 	^self
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> excludeMethod: aMethod [
 
 	| unproxifiedMethod |
@@ -89,7 +99,7 @@ PrfMethodProfiler >> excludeMethod: aMethod [
 	^ self
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> excludePackage: aPackage [
 	|classes|
 	classes := aPackage classes.
@@ -97,27 +107,34 @@ PrfMethodProfiler >> excludePackage: aPackage [
 	^self
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 PrfMethodProfiler >> finalize [
 
 	runners do: [ :runner | runner destroy ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfMethodProfiler >> initialize [
 
 	FinalizationReg add: self.
 	methods := Set new.
-	runners := Set new
+	runners := Set new.
+	self doNotUseRunWithIn
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfiler >> isProfilingMethod: aMethod [
 
 	^ methods includes: aMethod unproxifiedMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfiler >> profile: aBlock [
 	^self createRunner profile: aBlock
+]
+
+{ #category : 'initialization' }
+PrfMethodProfiler >> useRunWithIn [
+
+	useRunWithIn := true
 ]

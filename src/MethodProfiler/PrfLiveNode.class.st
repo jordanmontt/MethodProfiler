@@ -1,20 +1,21 @@
 Class {
-	#name : #PrfLiveNode,
-	#superclass : #PrfNode,
+	#name : 'PrfLiveNode',
+	#superclass : 'PrfNode',
 	#instVars : [
 		'nodeHash',
 		'lastTimeEntered',
 		'totalTime'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #'method flow' }
+{ #category : 'method flow' }
 PrfLiveNode >> enteringNode [
 	lastTimeEntered := DateAndTime now
 ]
 
-{ #category : #'method flow' }
+{ #category : 'method flow' }
 PrfLiveNode >> exitingNode [
 	"Manage the case of the root unknown node"
 	lastTimeEntered ifNil: [ ^ self ].
@@ -23,26 +24,26 @@ PrfLiveNode >> exitingNode [
 	lastTimeEntered := nil 
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfLiveNode >> initialize [
 
 	super initialize.
 	totalTime := 0 seconds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfLiveNode >> nodeHash [
 
 	^ nodeHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfLiveNode >> nodeHash: anObject [
 
 	nodeHash := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfLiveNode >> totalTime [
 
 	^ totalTime

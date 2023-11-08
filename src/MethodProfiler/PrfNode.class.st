@@ -1,41 +1,42 @@
 Class {
-	#name : #PrfNode,
-	#superclass : #Object,
+	#name : 'PrfNode',
+	#superclass : 'Object',
 	#instVars : [
 		'methodCalls',
 		'timesCalled',
 		'result'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> accumulatedCalls [
 
 	^ self timesCalled + (self methodCalls sum: [ :e | e accumulatedCalls ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> addCall [
 	timesCalled := timesCalled + 1.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> addCallTo: aNode [
 	methodCalls add: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> addCallTo: aNode times: aNumber [
 	methodCalls add: aNode withOccurrences: aNumber 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> addCalls: aNumber [
 	timesCalled := timesCalled + aNumber.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> allChildren [
 
 	| stack set |
@@ -55,7 +56,7 @@ PrfNode >> allChildren [
 	^set
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> allChildrenAndSelf [
 
 	^ self allChildren
@@ -63,7 +64,7 @@ PrfNode >> allChildrenAndSelf [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> curateCallsAfterCompaction: aCompactionDictionnary [
 
 	| oldMethodCalls |
@@ -79,55 +80,55 @@ PrfNode >> curateCallsAfterCompaction: aCompactionDictionnary [
 			withOccurrences: occurences ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PrfNode >> hasChildren [
 
 	^ methodCalls notEmpty
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfNode >> initialize [ 
 	super initialize.
 	methodCalls := Bag new.
 	timesCalled := 0.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> methodCalls [
 
 	^ methodCalls
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> numberOfCallsTo: aNode [
 	aNode ifNil: [ ^0 ] ifNotNil: [ ^methodCalls occurrencesOf: aNode ].
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 PrfNode >> postCopy [ 
 	methodCalls := methodCalls copy.
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> removeAllCalls [
 	methodCalls removeAll.
 	timesCalled := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> result: anObject [
 
 	result := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> timesCalled [
 
 	^ timesCalled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfNode >> totalNumberOfCalls [
 	^ methodCalls size.
 ]

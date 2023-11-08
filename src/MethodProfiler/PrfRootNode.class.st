@@ -1,13 +1,14 @@
 Class {
-	#name : #PrfRootNode,
-	#superclass : #PrfLiveNode,
+	#name : 'PrfRootNode',
+	#superclass : 'PrfLiveNode',
 	#instVars : [
 		'process'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #creation }
+{ #category : 'creation' }
 PrfRootNode class >> forProcess: aProcess withResult: aResultObject withHash: aString [
 
 	| node |
@@ -18,18 +19,18 @@ PrfRootNode class >> forProcess: aProcess withResult: aResultObject withHash: aS
 	^ node
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 PrfRootNode >> printString [
 	^'Root#' , process identityHash hex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfRootNode >> process [
 
 	^ process
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfRootNode >> process: anObject [
 
 	process := anObject

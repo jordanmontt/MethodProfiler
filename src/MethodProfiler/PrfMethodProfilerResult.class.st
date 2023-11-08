@@ -1,6 +1,6 @@
 Class {
-	#name : #PrfMethodProfilerResult,
-	#superclass : #Object,
+	#name : 'PrfMethodProfilerResult',
+	#superclass : 'Object',
 	#instVars : [
 		'methods',
 		'nodes',
@@ -9,10 +9,11 @@ Class {
 		'rootGraphNodes',
 		'graphNodes'
 	],
-	#category : #MethodProfiler
+	#category : 'MethodProfiler',
+	#package : 'MethodProfiler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> buildCallGraph [
 	| compactionDictionary |
 	
@@ -41,7 +42,7 @@ PrfMethodProfilerResult >> buildCallGraph [
 	graphNodes do: [ :node | node curateCallsAfterCompaction: compactionDictionary ]
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 PrfMethodProfilerResult >> callGraph [
 
 	| c edges label roassalEdges roassalNodes minEdgeValue maxEdgeValue allNodes stepping layout |
@@ -115,19 +116,19 @@ PrfMethodProfilerResult >> callGraph [
 	^ c
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 PrfMethodProfilerResult >> drawCallGraph [
  	<inspectorPresentationOrder: 10 title: 'Call Graph'>
 	^ SpRoassal3InspectorPresenter new canvas: self callGraph yourself
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 PrfMethodProfilerResult >> drawFlameGraph [
 	<inspectorPresentationOrder: 2 title: 'Flame Graph'>
 	^ SpRoassal3InspectorPresenter new canvas: self flameGraph yourself
 ]
 
-{ #category : #ui }
+{ #category : 'ui' }
 PrfMethodProfilerResult >> flameGraph [
 
 	| builder |
@@ -154,25 +155,25 @@ PrfMethodProfilerResult >> flameGraph [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> graphRootNode [
 	
 	^self graphRootNodeForProcess: mainProcess
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> graphRootNodeForProcess: aProcess [
 
 	^ rootGraphNodes at: aProcess ifPresent: [ :node | node ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> graphRootNodes [
 
 	^ rootNodes
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PrfMethodProfilerResult >> initialize [ 
 	nodes := Dictionary new.
 	rootNodes := IdentityDictionary new.
@@ -180,31 +181,31 @@ PrfMethodProfilerResult >> initialize [
 	rootGraphNodes := IdentityDictionary new.
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> localGraphRootNode [
 
 	^self graphRootNodeForProcess: thisProcess
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> localRootNode [
 
 	^self rootNodeForProcess: thisProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> mainProcess: anObject [
 
 	mainProcess := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> methods: anObject [
 
 	methods := anObject
 ]
 
-{ #category : #installation }
+{ #category : 'installation' }
 PrfMethodProfilerResult >> nodeForMethod: aMethod withPrecedingNode: aNode [
 
 	| uniqueNodeName |
@@ -219,13 +220,13 @@ PrfMethodProfilerResult >> nodeForMethod: aMethod withPrecedingNode: aNode [
 				  withHash: (SHA1 hashMessage: uniqueNodeName) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> nodes [
 
 	^ nodes
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> nodesForMethod: aMethod [
 
 	^ (nodes keys select: [ :key |
@@ -233,7 +234,7 @@ PrfMethodProfilerResult >> nodesForMethod: aMethod [
 		  :key | nodes at: key ]
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> numberOfCallsFrom: aMethod [
 
 	aMethod ifNil: [ ^ self graphRootNode totalNumberOfCalls ].
@@ -244,7 +245,7 @@ PrfMethodProfilerResult >> numberOfCallsFrom: aMethod [
 		  ifAbsent: [ 0 ]
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> numberOfCallsFrom: firstMethod to: secondMethod [
 
 	| fromNode toNode |
@@ -259,7 +260,7 @@ PrfMethodProfilerResult >> numberOfCallsFrom: firstMethod to: secondMethod [
 	^ fromNode numberOfCallsTo: toNode 
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> numberOfCallsTo: aMethod [
 
 	aMethod ifNil: [ ^ self graphRootNode timesCalled ].
@@ -270,13 +271,13 @@ PrfMethodProfilerResult >> numberOfCallsTo: aMethod [
 		  ifAbsent: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> rootNode [
 	
 	^self rootNodeForProcess: mainProcess
 ]
 
-{ #category : #counting }
+{ #category : 'counting' }
 PrfMethodProfilerResult >> rootNodeForProcess: aProcess [
 
 	| newNode uniqueNodeName |
@@ -294,7 +295,7 @@ PrfMethodProfilerResult >> rootNodeForProcess: aProcess [
 	^ newNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PrfMethodProfilerResult >> rootNodes [
 
 	^ rootNodes
