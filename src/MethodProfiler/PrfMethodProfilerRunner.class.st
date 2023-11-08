@@ -85,7 +85,8 @@ PrfMethodProfilerRunner >> methodIntercepterClass: aClass [
 PrfMethodProfilerRunner >> methods: aSetOfMethods [
 
 	(aSetOfMethods collect: [ :method | method unproxifiedMethod ]) do: [ :method |
-		intercepters at: method
+		intercepters
+			at: method
 			put: (methodIntercepterClass newForMethod: method withRunner: self) ].
 	result methods: aSetOfMethods
 ]

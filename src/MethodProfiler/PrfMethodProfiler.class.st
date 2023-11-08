@@ -1,3 +1,20 @@
+"
+```st
+| testClasses testSuites packageMethods profiler classes |
+classes := 'AI-Algorithms-Graph-Tests' asPackage definedClasses.
+testClasses := classes select: [ :e | e isTestCase ].
+testSuites := testClasses collect: #suite.
+
+packageMethods :=classes flatCollect: #methods.
+
+profiler := PrfMethodProfiler new.
+profiler useRunWithIn.
+packageMethods do: [ :m | profiler addMethod: m ].
+
+profiler profile: [ testSuites do: #run ].
+profiler
+```
+"
 Class {
 	#name : 'PrfMethodProfiler',
 	#superclass : 'Object',
