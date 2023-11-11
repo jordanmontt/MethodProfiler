@@ -1,126 +1,112 @@
 Class {
-	#name : #PrfProfilerRunnerTest,
-	#superclass : #TestCase,
+	#name : 'PrfProfilerRunnerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'runner'
 	],
-	#category : #'MethodProfiler-Tests'
+	#category : 'MethodProfiler-Tests',
+	#package : 'MethodProfiler-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 PrfProfilerRunnerTest >> setUp [
+
 	super setUp.
-	
 	runner := PrfMethodProfilerRunner new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 PrfProfilerRunnerTest >> tearDown [ 
 
 	runner destroy.
-	
 	super tearDown.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testBlockMethodExecutionCount [
-	|result|
+
+	| result |
 	runner methods: PrfDummyClassA methodDictionary.
-	result := runner profile: [
-		PrfDummyClassA new foo. ].
-	self assert: (result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 1.
+	result := runner profile: [ PrfDummyClassA new foo ].
+	self assert: (result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testClassMethodExecutionCount [
 
 	runner methods: PrfDummyClassA methodDictionary.
 
-	runner start.
+	runner startProfiling.
 	PrfDummyClassA new foo.
-	runner stop.
+	runner stopProfiling.
 	runner result buildCallGraph.
 
-	self
-		assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo)
-		equals: 1
+	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testComplexMethodExecutionCount [
 
 	runner methods: {
 			(PrfDummyClassA >> #foo).
 			(PrfDummyClassA >> #bar:) }.
 
-
 	runner profile: [
 		PrfDummyClassA new foo.
 		PrfDummyClassA new bar: true ].
 
+	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 2.
+	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #bar:) equals: 1.
 	self
-		assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo)
-		equals: 2.
-	self
-		assert: (runner result numberOfCallsTo: PrfDummyClassA >> #bar:)
+		assert: (runner result numberOfCallsFrom: PrfDummyClassA >> #bar: to: PrfDummyClassA >> #foo)
 		equals: 1.
-	self
-		assert: (runner result
-				 numberOfCallsFrom: PrfDummyClassA >> #bar:
-				 to: PrfDummyClassA >> #foo)
-		equals: 1.
-	self
-		assert:
-		(runner result numberOfCallsFrom: nil to: PrfDummyClassA >> #foo)
-		equals: 1.
-	self
-		assert:
-		(runner result numberOfCallsFrom: nil to: PrfDummyClassA >> #bar:)
-		equals: 1
+	self assert: (runner result numberOfCallsFrom: nil to: PrfDummyClassA >> #foo) equals: 1.
+	self assert: (runner result numberOfCallsFrom: nil to: PrfDummyClassA >> #bar:) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testExceptionInBlockProfile [
-	runner methods: {PrfDummyClassA >> #foo}.
+
+	runner methods: { (PrfDummyClassA >> #foo) }.
 	self should: [ runner profile: [ 1 error: 'test' ] ] raise: Error.
-	self deny: (runner isProfilingNow)
+	self deny: runner isProfilingNow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testPackageMethodExecutionCount [
 
 	'MethodProfiler-Tests' asPackage definedClasses do: [ :class |
 		runner methods: class methodDictionary ].
 
-	runner start.
+	runner startProfiling.
 	PrfDummyClassA new foo.
-	runner stop.
+	runner stopProfiling.
 	runner result buildCallGraph.
 
-	self
-		assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo)
-		equals: 1
+	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testReset [
-	runner methods: {PrfDummyClassA >> #foo}.
-	
-	runner start.
+
+	runner methods: { (PrfDummyClassA >> #foo) }.
+
+	runner startProfiling.
 	PrfDummyClassA new foo.
-	runner stop.
-	runner reset.
-	
-	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 0.
+	runner stopProfiling.
+	"runner reset."
+
+	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PrfProfilerRunnerTest >> testSimpleMethodExecutionCount [
+	
 	runner methods: {PrfDummyClassA >> #foo. PrfDummyClassA >> #bar:}.
 	
-	runner start.
+	runner startProfiling.
 	PrfDummyClassA new foo.
-	runner stop.
+	runner stopProfiling.
 	runner result buildCallGraph.
 	
 	self assert: (runner result numberOfCallsTo: PrfDummyClassA >> #foo) equals: 1.

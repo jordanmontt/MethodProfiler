@@ -1,8 +1,6 @@
 Class {
 	#name : 'PrfMethodIntercepter',
-	#superclass : 'MpHandler',
-	#traits : 'TPrfMethodIntercepter',
-	#classTraits : 'TPrfMethodIntercepter classTrait',
+	#superclass : 'AbstractMethodIntercepter',
 	#category : 'MethodProfiler-MethodProxies',
 	#package : 'MethodProfiler',
 	#tag : 'MethodProxies'
@@ -17,7 +15,7 @@ PrfMethodIntercepter class >> newForMethod: aMethod withRunner: aRunner [
 		  yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'installation' }
 PrfMethodIntercepter >> methodProxyClass [
 
 	^ MpMethodProxy
