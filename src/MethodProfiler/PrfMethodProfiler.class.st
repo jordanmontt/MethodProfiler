@@ -55,8 +55,8 @@ PrfMethodProfiler class >> shouldWrap: aMethod [
 
 { #category : 'installation' }
 PrfMethodProfiler >> addClass: aClass [
-	aClass methodDictionary do: [ :method | self addMethod: method unproxifiedMethod ].
-	^self
+
+	aClass methodDictionary do: [ :method | self addMethod: method unproxifiedMethod ]
 ]
 
 { #category : 'installation' }
@@ -64,17 +64,13 @@ PrfMethodProfiler >> addMethod: aMethod [
 
 	| unproxifiedMethod |
 	unproxifiedMethod := aMethod unproxifiedMethod.
-	(self class shouldWrap: unproxifiedMethod) ifTrue: [
-		methods add: unproxifiedMethod ].
-	^ self
+	(self class shouldWrap: unproxifiedMethod) ifTrue: [ methods add: unproxifiedMethod ]
 ]
 
 { #category : 'installation' }
 PrfMethodProfiler >> addPackage: aPackage [
-	|classes|
-	classes := aPackage definedClasses.
-	classes do: [ :class | self addClass: class ].
-	^self
+
+	aPackage definedClasses do: [ :class | self addClass: class ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -100,11 +96,8 @@ PrfMethodProfiler >> doNotUseRunWithIn [
 
 { #category : 'installation' }
 PrfMethodProfiler >> excludeClass: aClass [
-	|methods|
-	methods := aClass methodDictionary.
-	methods do: [ :method |
-		self excludeMethod: method ].
-	^self
+
+	aClass methodDictionary do: [ :method | self excludeMethod: method ]
 ]
 
 { #category : 'installation' }
@@ -113,16 +106,13 @@ PrfMethodProfiler >> excludeMethod: aMethod [
 	| unproxifiedMethod |
 	unproxifiedMethod := aMethod unproxifiedMethod.
 	(methods includes: unproxifiedMethod)
-		ifTrue: [ methods remove: unproxifiedMethod ].
-	^ self
+		ifTrue: [ methods remove: unproxifiedMethod ]
 ]
 
 { #category : 'installation' }
 PrfMethodProfiler >> excludePackage: aPackage [
-	|classes|
-	classes := aPackage classes.
-	classes do: [ :class | self excludeClass: class ].
-	^self
+
+	aPackage classes do: [ :class | self excludeClass: class ]
 ]
 
 { #category : 'as yet unclassified' }
@@ -148,7 +138,8 @@ PrfMethodProfiler >> isProfilingMethod: aMethod [
 
 { #category : 'accessing' }
 PrfMethodProfiler >> profile: aBlock [
-	^self createRunner profile: aBlock
+
+	^ self createRunner profile: aBlock
 ]
 
 { #category : 'initialization' }
