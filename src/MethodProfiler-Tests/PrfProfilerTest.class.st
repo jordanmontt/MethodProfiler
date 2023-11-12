@@ -1,21 +1,20 @@
 Class {
-	#name : 'PrfProfilerTest',
-	#superclass : 'TestCase',
+	#name : #PrfProfilerTest,
+	#superclass : #TestCase,
 	#instVars : [
 		'profiler'
 	],
-	#category : 'MethodProfiler-Tests',
-	#package : 'MethodProfiler-Tests'
+	#category : #'MethodProfiler-Tests'
 }
 
-{ #category : 'running' }
+{ #category : #running }
 PrfProfilerTest >> setUp [
 	super setUp.
 	
 	profiler := PrfMethodProfiler new
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testClassExclude [
 
 	profiler addMethod: PrfDummyClassA >> #foo.
@@ -23,7 +22,7 @@ PrfProfilerTest >> testClassExclude [
 	self deny: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testClassForbiddenDomainError [
 
 	profiler addClass: PrfMethodProfilerRunner.
@@ -31,14 +30,14 @@ PrfProfilerTest >> testClassForbiddenDomainError [
 		(profiler isProfilingMethod: PrfMethodProfilerRunner >> #profile:)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testClassProfiled [
 
 	profiler addClass: PrfDummyClassA.
 	self assert: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testExclude [
 
 	profiler addMethod: PrfDummyClassA >> #foo.
@@ -46,7 +45,7 @@ PrfProfilerTest >> testExclude [
 	self deny: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testForbiddenDomainError [
 
 	profiler addMethod: PrfMethodProfilerRunner >> #profile:.
@@ -54,14 +53,14 @@ PrfProfilerTest >> testForbiddenDomainError [
 		(profiler isProfilingMethod: PrfMethodProfilerRunner >> #profile:)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testNotProfiled [
 
 	profiler addMethod: PrfDummyClassA >> #bar:.
 	self deny: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testPackageExclude [
 
 	profiler addPackage: 'MethodProfiler-Tests' asPackage.
@@ -69,7 +68,7 @@ PrfProfilerTest >> testPackageExclude [
 	self deny: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testPackageForbiddenDomainError [
 
 	profiler addPackage: 'MethodProfiler' asPackage.
@@ -77,14 +76,14 @@ PrfProfilerTest >> testPackageForbiddenDomainError [
 		(profiler isProfilingMethod: PrfMethodProfilerRunner >> #profile:)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testPackageProfiled [
 
 	profiler addPackage: 'MethodProfiler-Tests' asPackage.
 	self assert: (profiler isProfilingMethod: PrfDummyClassA >> #foo)
 ]
 
-{ #category : 'tests' }
+{ #category : #tests }
 PrfProfilerTest >> testProfiled [
 
 	profiler addMethod: PrfDummyClassA >> #foo.

@@ -17,8 +17,8 @@ Class {
 PrfMethodProfilerRunner class >> newForMethods: aSetOfMethods [
 
 	^ self new
-		methods: aSetOfMethods;
-		yourself
+		  methods: aSetOfMethods;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -45,8 +45,8 @@ PrfMethodProfilerRunner >> enterMethod: aMethod [
 	callStack ensureStackIsInitialized.
 	precedingNode := callStack top.
 	node := result
-		nodeForMethod: aMethod
-		withPrecedingNode: precedingNode.
+		        nodeForMethod: aMethod
+		        withPrecedingNode: precedingNode.
 	precedingNode addCallTo: node.
 	node addCall.
 	callStack push: node.
@@ -93,10 +93,10 @@ PrfMethodProfilerRunner >> methods: aSetOfMethods [
 
 { #category : 'lifecycle' }
 PrfMethodProfilerRunner >> profile: aBlock [
-
+	
 	result mainProcess: thisProcess.
-	self startProfiling.
-	aBlock ensure: [ self stopProfiling ].
+	self start.
+	aBlock ensure: [ self stop ].
 	result buildCallGraph.
 	^ result
 ]
@@ -113,18 +113,16 @@ PrfMethodProfilerRunner >> result [
 ]
 
 { #category : 'lifecycle' }
-PrfMethodProfilerRunner >> startProfiling [
-
+PrfMethodProfilerRunner >> start [
 	intercepters do: [ :intercepter | intercepter install ].
 	result rootNode enteringNode.
 	profilingNow := true
 ]
 
 { #category : 'lifecycle' }
-PrfMethodProfilerRunner >> stopProfiling [
+PrfMethodProfilerRunner >> stop [
 
 	result rootNode exitingNode.
 	intercepters do: [ :intercepter | intercepter uninstall ].
-	profilingNow := false.
-	self destroy
+	profilingNow := false
 ]

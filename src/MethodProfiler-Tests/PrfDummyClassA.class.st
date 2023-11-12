@@ -1,16 +1,15 @@
 Class {
-	#name : 'PrfDummyClassA',
-	#superclass : 'Object',
-	#category : 'MethodProfiler-Tests',
-	#package : 'MethodProfiler-Tests'
+	#name : #PrfDummyClassA,
+	#superclass : #Object,
+	#category : #'MethodProfiler-Tests'
 }
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PrfDummyClassA >> bar: isExecutingFoo [
 	isExecutingFoo ifTrue: [ self foo ].
 	
 ]
 
-{ #category : 'accessing' }
+{ #category : #accessing }
 PrfDummyClassA >> foo [
 ]

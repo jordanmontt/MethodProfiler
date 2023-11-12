@@ -1,25 +1,24 @@
 Class {
-	#name : 'PrfDummyRunnerForIntercepter',
-	#superclass : 'Object',
+	#name : #PrfDummyRunnerForIntercepter,
+	#superclass : #Object,
 	#instVars : [
 		'before',
 		'after'
 	],
-	#category : 'MethodProfiler-Tests',
-	#package : 'MethodProfiler-Tests'
+	#category : #'MethodProfiler-Tests'
 }
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PrfDummyRunnerForIntercepter >> enterMethod: aMethod [
 	before := before + 1.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PrfDummyRunnerForIntercepter >> exitMethod: aMethod [
 	after := after + 1.
 ]
 
-{ #category : 'initialization' }
+{ #category : #initialization }
 PrfDummyRunnerForIntercepter >> initialize [ 
 	before := 0.
 	after := 0

@@ -20,8 +20,12 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methods',
-		'useRunWithIn',
-		'runner'
+		'runners',
+		'lastRunner',
+		'useRunWithIn'
+	],
+	#classVars : [
+		'FinalizationReg'
 	],
 	#category : 'MethodProfiler-Core',
 	#package : 'MethodProfiler',
@@ -51,8 +55,8 @@ PrfMethodProfiler class >> shouldWrap: aMethod [
 
 { #category : 'installation' }
 PrfMethodProfiler >> addClass: aClass [
-
-	aClass methodDictionary do: [ :method | self addMethod: method unproxifiedMethod ]
+	aClass methodDictionary do: [ :method | self addMethod: method unproxifiedMethod ].
+	^self
 ]
 
 { #category : 'installation' }
@@ -67,10 +71,10 @@ PrfMethodProfiler >> addMethod: aMethod [
 
 { #category : 'installation' }
 PrfMethodProfiler >> addPackage: aPackage [
-
-	| classes |
+	|classes|
 	classes := aPackage definedClasses.
-	classes do: [ :class | self addClass: class ]
+	classes do: [ :class | self addClass: class ].
+	^self
 ]
 
 { #category : 'as yet unclassified' }
@@ -96,8 +100,11 @@ PrfMethodProfiler >> doNotUseRunWithIn [
 
 { #category : 'installation' }
 PrfMethodProfiler >> excludeClass: aClass [
-
-	aClass methodDictionary do: [ :method | self excludeMethod: method ]
+	|methods|
+	methods := aClass methodDictionary.
+	methods do: [ :method |
+		self excludeMethod: method ].
+	^self
 ]
 
 { #category : 'installation' }
@@ -105,13 +112,17 @@ PrfMethodProfiler >> excludeMethod: aMethod [
 
 	| unproxifiedMethod |
 	unproxifiedMethod := aMethod unproxifiedMethod.
-	(methods includes: unproxifiedMethod) ifTrue: [ methods remove: unproxifiedMethod ]
+	(methods includes: unproxifiedMethod)
+		ifTrue: [ methods remove: unproxifiedMethod ].
+	^ self
 ]
 
 { #category : 'installation' }
 PrfMethodProfiler >> excludePackage: aPackage [
-
-	aPackage classes do: [ :class | self excludeClass: class ]
+	|classes|
+	classes := aPackage classes.
+	classes do: [ :class | self excludeClass: class ].
+	^self
 ]
 
 { #category : 'as yet unclassified' }
@@ -137,8 +148,7 @@ PrfMethodProfiler >> isProfilingMethod: aMethod [
 
 { #category : 'accessing' }
 PrfMethodProfiler >> profile: aBlock [
-
-	^ self createRunner profile: aBlock
+	^self createRunner profile: aBlock
 ]
 
 { #category : 'initialization' }

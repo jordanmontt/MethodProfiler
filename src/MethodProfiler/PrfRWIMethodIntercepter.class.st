@@ -1,6 +1,8 @@
 Class {
 	#name : 'PrfRWIMethodIntercepter',
-	#superclass : 'AbstractMethodIntercepter',
+	#superclass : 'MpRWIHandler',
+	#traits : 'TPrfMethodIntercepter',
+	#classTraits : 'TPrfMethodIntercepter classTrait',
 	#category : 'MethodProfiler-runWitnIn',
 	#package : 'MethodProfiler',
 	#tag : 'runWitnIn'
