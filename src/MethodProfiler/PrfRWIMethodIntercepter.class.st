@@ -7,7 +7,7 @@ Class {
 	#tag : 'runWitnIn'
 }
 
-{ #category : 'installation' }
+{ #category : 'accessing' }
 PrfRWIMethodIntercepter >> methodProxyClass [
 
 	^ MpRWIMethodProxy

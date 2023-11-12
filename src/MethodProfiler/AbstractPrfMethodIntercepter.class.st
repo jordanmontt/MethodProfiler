@@ -52,7 +52,7 @@ AbstractPrfMethodIntercepter >> method: anObject [
 	method := anObject
 ]
 
-{ #category : 'installation' }
+{ #category : 'accessing' }
 AbstractPrfMethodIntercepter >> methodProxyClass [
 
 	^ self subclassResponsibility
