@@ -20,7 +20,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'methods',
-		'runners',
 		'lastRunner',
 		'useRunWithIn'
 	],
@@ -76,15 +75,10 @@ PrfMethodProfiler >> addPackage: aPackage [
 { #category : 'as yet unclassified' }
 PrfMethodProfiler >> createRunner [
 
-	lastRunner ifNotNil: [
-		lastRunner isProfilingNow ifTrue: [
-			^ Error signal: 'The last profiling is still running' ].
-		lastRunner destroy ].
-
 	lastRunner := useRunWithIn
 		ifTrue: [ PrfMethodProfilerRunner newRWIForMethods: methods ]
 		ifFalse: [ PrfMethodProfilerRunner newForMethods: methods ].
-	runners add: lastRunner.
+	FinalizationReg add: self.
 	^ lastRunner
 ]
 
@@ -118,15 +112,13 @@ PrfMethodProfiler >> excludePackage: aPackage [
 { #category : 'as yet unclassified' }
 PrfMethodProfiler >> finalize [
 
-	runners do: [ :runner | runner destroy ]
+	lastRunner destroy
 ]
 
 { #category : 'initialization' }
 PrfMethodProfiler >> initialize [
 
-	FinalizationReg add: self.
 	methods := Set new.
-	runners := Set new.
 	self doNotUseRunWithIn
 ]
 
